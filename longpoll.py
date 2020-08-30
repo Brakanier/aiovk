@@ -38,11 +38,11 @@ class LongpollBot():
     async def run(self):
         if not self._key or not self._ts or self._wait:
             await self.get_longpoll_session()
-
+        
         while True:
             print('start_updates')
             for e in await self.updates():
-                task = self.loop.create_task(self.reply(e, 'Ответ'))
+                self.loop.create_task(self.reply(e, 'Ответ'))
             
     async def updates(self):
         params = {
@@ -53,7 +53,9 @@ class LongpollBot():
         }
         response = await self.session.get(f'{self._server}', params=params)
         print(response.status)
+        
         data = await response.json()
+        print(data)
         self._ts = data['ts']
         return data['updates']
 

@@ -14,10 +14,17 @@ class API():
         self.loop = asyncio.get_event_loop()
 
     
-    async def method(self, method, args = None):
+    async def method(self, method, data = None):
         print(method)
-        print(args)
+        print(data)
+        data['access_token'] = self.token
+        data['group_id'] = self.group_id
+        data['v'] = self.v
 
+        response = await self.session.post(f'{self.API_URL}/{method}', data=data)
+        result = await response.json()
+        print(result)
+        return result['response']
 
     def get_api(self):
         return APIMethod(self)

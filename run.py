@@ -13,12 +13,13 @@ def run():
 
     
 
+    #loop.run_until_complete(lp.run())
     loop.run_until_complete(test_request())
 
 async def test_request():
     vk = api.API(token, group_id).get_api()
-    await vk.messages.send(text='текст', user_ids=[1,2,3])
-    await vk.messages.send(text='testaatsad')
+    await vk.messages.send(peer_id=55811116, message='текст')
+    #await vk.messages.send(text='testaatsad')
 
 if __name__ == "__main__":
     run()
